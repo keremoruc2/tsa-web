@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --color-turkish-red: #E30A17;
+  --color-turkish-red-dark: #B8080F;
+  --color-turkish-red-light: rgba(227, 10, 23, 0.35);
+}
+
 /* Color System - Turkish Association Theme */
 :root {
   /* Base Colors */
@@ -169,4 +175,33 @@ select:focus {
 /* Section backgrounds */
 .bg-section-alt {
   background: linear-gradient(180deg, var(--color-neutral-100) 0%, var(--color-white) 100%);
+}
+
+/* Turkish Red utility classes - fallback for Tailwind v4 */
+.bg-turkish-red {
+  background-color: #E30A17 !important;
+}
+
+.bg-turkish-red-dark {
+  background-color: #B8080F !important;
+}
+
+.text-turkish-red {
+  color: #E30A17 !important;
+}
+
+.text-turkish-red-dark {
+  color: #B8080F !important;
+}
+
+.border-turkish-red {
+  border-color: #E30A17 !important;
+}
+
+.hover\:bg-turkish-red-dark:hover {
+  background-color: #B8080F !important;
+}
+
+.shadow-turkish-red\/30 {
+  box-shadow: 0 10px 15px -3px rgba(227, 10, 23, 0.3), 0 4px 6px -4px rgba(227, 10, 23, 0.3);
 }

@@ -16,34 +16,34 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-turkish-red via-red-600 to-red-700 overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
-        </div>
-        
-        {/* Pattern overlay */}
-        <div className="absolute inset-0 opacity-10" style={{
+      <section className="relative min-h-[85vh] flex items-center justify-center bg-turkish-red overflow-hidden">
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
-          {/* Turkish Crescent & Star */}
-          <div className="mb-8 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full mb-4">
-              <span className="text-5xl">🇹🇷</span>
+          {/* Logo */}
+          <div className="mb-6 animate-fade-in">
+            <div className="inline-flex items-center justify-center w-28 h-28 bg-white rounded-full shadow-2xl overflow-hidden">
+              <Image
+                src="/images/logo.jpg"
+                alt="TSA TWENTE Logo"
+                width={112}
+                height={112}
+                className="w-full h-full object-cover"
+                priority
+              />
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in">
             Hoşgeldiniz!
           </h1>
-          <p className="text-xl md:text-2xl lg:text-3xl font-light mb-4 opacity-90 animate-fade-in">
+          <p className="text-xl md:text-2xl lg:text-3xl font-light mb-3 opacity-90 animate-fade-in">
             Welcome to TSA TWENTE
           </p>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10 opacity-80 font-light animate-fade-in">
+          <p className="text-base md:text-lg max-w-2xl mx-auto mb-8 opacity-80 font-light animate-fade-in">
             Turkish Student Association at University of Twente. We bring together students and 
             community members to celebrate Turkish culture, build friendships, and create 
             unforgettable memories.
@@ -68,9 +68,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Scroll indicator - animated arrow */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>

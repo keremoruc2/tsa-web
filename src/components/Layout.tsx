@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
@@ -49,9 +50,15 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 group" onClick={closeMobileMenu}>
-              {/* Turkish Flag Icon */}
-              <div className="w-10 h-10 bg-turkish-red rounded-full flex items-center justify-center">
-                <span className="text-white text-xl">🇹🇷</span>
+              {/* Logo */}
+              <div className="w-10 h-10 rounded-full overflow-hidden shadow-sm">
+                <Image
+                  src="/images/logo.jpg"
+                  alt="TSA TWENTE"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-turkish-red tracking-tight">TSA TWENTE</span>
@@ -125,8 +132,14 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
               {/* Brand & Description */}
               <div className="md:col-span-1">
                 <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-10 h-10 bg-turkish-red rounded-full flex items-center justify-center">
-                    <span className="text-white text-xl">🇹🇷</span>
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <Image
+                      src="/images/logo.jpg"
+                      alt="TSA TWENTE"
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <span className="text-xl font-bold text-white">TSA TWENTE</span>
                 </div>
