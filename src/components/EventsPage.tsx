@@ -95,7 +95,7 @@ export default function EventsPage() {
     <Layout>
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 px-4 bg-gradient-to-br from-turkish-red via-red-600 to-red-700 text-white">
+        <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
@@ -219,7 +219,7 @@ export default function EventsPage() {
                 href="/join"
                 className="btn-primary inline-flex items-center rounded-lg"
               >
-                Join TAUT
+                Join TSA TWENTE
               </Link>
             </div>
           </section>
@@ -255,7 +255,7 @@ export default function EventsPage() {
               Don&apos;t Miss Out!
             </h2>
             <p className="text-xl text-neutral-300 mb-10 max-w-2xl mx-auto">
-              Become a TAUT member to get early access to events and stay updated 
+              Become a TSA TWENTE member to get early access to events and stay updated 
               on all our activities.
             </p>
             <Link

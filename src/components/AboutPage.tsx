@@ -9,7 +9,7 @@ export default function AboutPage() {
     <Layout>
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-28 px-4 bg-gradient-to-br from-turkish-red via-red-600 to-red-700 text-white">
+        <section className="relative py-20 md:py-28 px-4 bg-turkish-red text-white">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
@@ -19,10 +19,10 @@ export default function AboutPage() {
               Est. 2015
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              About TAUT
+              About TSA TWENTE
             </h1>
             <p className="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
-              The Turkish Association at University of Twente - where culture, 
+              Turkish Student Association at University of Twente - where culture, 
               community, and connection come together.
             </p>
           </div>
@@ -39,7 +39,7 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-4 text-neutral-600 leading-relaxed">
                   <p>
-                    TAUT (Turkish Association at University of Twente) was founded with a simple but 
+                    TSA TWENTE (Turkish Student Association at University of Twente) was founded with a simple but 
                     powerful mission: to bring Turkish culture to life in the heart of the Netherlands 
                     while creating a home away from home for Turkish students and those interested in 
                     Turkish culture.
@@ -52,7 +52,7 @@ export default function AboutPage() {
                   <p>
                     Whether you&apos;re a Turkish student looking for familiar faces, an international 
                     student curious about Turkish culture, or anyone seeking a welcoming community, 
-                    TAUT opens its doors to you.
+                    TSA TWENTE opens its doors to you.
                   </p>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function AboutPage() {
               Want to Be Part of Our Story?
             </h2>
             <p className="text-xl text-neutral-300 mb-10 max-w-2xl mx-auto">
-              Join TAUT and become part of a vibrant community that celebrates culture, 
+              Join TSA TWENTE and become part of a vibrant community that celebrates culture, 
               friendship, and connection.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

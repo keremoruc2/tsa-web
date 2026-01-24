@@ -7,7 +7,7 @@ export default function ContactPage() {
     <Layout>
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 px-4 bg-gradient-to-br from-turkish-red via-red-600 to-red-700 text-white">
+        <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
@@ -17,7 +17,7 @@ export default function ContactPage() {
               Contact Us
             </h1>
             <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-              We&apos;d love to hear from you! Get in touch with the TAUT team.
+              We&apos;d love to hear from you! Get in touch with the TSA TWENTE team.
             </p>
           </div>
         </section>
@@ -32,7 +32,7 @@ export default function ContactPage() {
                   Get in Touch
                 </h2>
                 <p className="text-neutral-600 mb-8">
-                  Have questions about TAUT, our events, or membership? We&apos;re here to help!
+                  Have questions about TSA TWENTE, our events, or membership? We&apos;re here to help!
                   Reach out through any of the channels below.
                 </p>
 
@@ -47,10 +47,10 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-neutral-900 mb-1">Email</h3>
                       <a 
-                        href="mailto:info@taut.nl" 
+                        href="mailto:info@tsatwente.nl" 
                         className="text-turkish-red hover:underline"
                       >
-                        info@taut.nl
+                        info@tsatwente.nl
                       </a>
                       <p className="text-neutral-500 text-sm mt-1">
                         We typically respond within 24-48 hours
@@ -108,7 +108,7 @@ export default function ContactPage() {
                 <div className="space-y-4">
                   {/* Instagram */}
                   <a
-                    href="https://instagram.com/taut_ut"
+                    href="https://instagram.com/tsa_twente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
@@ -122,7 +122,7 @@ export default function ContactPage() {
                       <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
                         Instagram
                       </h3>
-                      <p className="text-neutral-500 text-sm">@taut_ut</p>
+                      <p className="text-neutral-500 text-sm">@tsa_twente</p>
                     </div>
                     <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -131,7 +131,7 @@ export default function ContactPage() {
 
                   {/* LinkedIn */}
                   <a
-                    href="https://linkedin.com/company/taut-ut"
+                    href="https://linkedin.com/company/tsa-twente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
@@ -145,7 +145,7 @@ export default function ContactPage() {
                       <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
                         LinkedIn
                       </h3>
-                      <p className="text-neutral-500 text-sm">TAUT at UT</p>
+                      <p className="text-neutral-500 text-sm">TSA Twente</p>
                     </div>
                     <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -154,7 +154,7 @@ export default function ContactPage() {
 
                   {/* Facebook */}
                   <a
-                    href="https://facebook.com/tautut"
+                    href="https://facebook.com/tsatwente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
@@ -168,7 +168,7 @@ export default function ContactPage() {
                       <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
                         Facebook
                       </h3>
-                      <p className="text-neutral-500 text-sm">TAUT UT</p>
+                      <p className="text-neutral-500 text-sm">TSA Twente</p>
                     </div>
                     <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -193,10 +193,10 @@ export default function ContactPage() {
             <div className="space-y-4">
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h3 className="font-semibold text-neutral-900 mb-2">
-                  Do I need to be Turkish to join TAUT?
+                  Do I need to be Turkish to join TSA TWENTE?
                 </h3>
                 <p className="text-neutral-600">
-                  Not at all! TAUT welcomes everyone who is interested in Turkish culture, 
+                  Not at all! TSA TWENTE welcomes everyone who is interested in Turkish culture, 
                   wants to make new friends, or simply wants to be part of our community.
                 </p>
               </div>
@@ -235,12 +235,12 @@ export default function ContactPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 px-4 bg-turkish-red text-white">
+        <section className="py-10 px-4 bg-turkish-red text-white">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Join?
             </h2>
-            <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
+            <p className="text-xl opacity-90 mb-6 max-w-2xl mx-auto">
               Become part of our community and experience Turkish culture with us!
             </p>
             <a

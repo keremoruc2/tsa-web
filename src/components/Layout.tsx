@@ -54,9 +54,9 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                 <span className="text-white text-xl">🇹🇷</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-turkish-red tracking-tight">TAUT</span>
+                <span className="text-xl font-bold text-turkish-red tracking-tight">TSA TWENTE</span>
                 <span className="text-[10px] text-neutral-500 tracking-wider uppercase hidden sm:block">
-                  Turkish Association UT
+                  Turkish Student Association
                 </span>
               </div>
             </Link>
@@ -128,10 +128,10 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                   <div className="w-10 h-10 bg-turkish-red rounded-full flex items-center justify-center">
                     <span className="text-white text-xl">🇹🇷</span>
                   </div>
-                  <span className="text-xl font-bold text-white">TAUT</span>
+                  <span className="text-xl font-bold text-white">TSA TWENTE</span>
                 </div>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  The Turkish Association at University of Twente. Bringing Turkish culture 
+                  Turkish Student Association at University of Twente. Bringing Turkish culture 
                   and community together in the Netherlands.
                 </p>
               </div>
@@ -165,8 +165,8 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                     <svg className="w-4 h-4 text-turkish-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <a href="mailto:info@taut.nl" className="hover:text-white transition-colors">
-                      info@taut.nl
+                    <a href="mailto:info@tsatwente.nl" className="hover:text-white transition-colors">
+                      info@tsatwente.nl
                     </a>
                   </li>
                   <li className="flex items-start space-x-2">
@@ -186,7 +186,7 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                 </h3>
                 <div className="flex space-x-3">
                   <a
-                    href="https://instagram.com/taut_ut"
+                    href="https://instagram.com/tsa_twente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 bg-neutral-800 hover:bg-turkish-red rounded-full flex items-center justify-center transition-colors"
@@ -197,7 +197,7 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                     </svg>
                   </a>
                   <a
-                    href="https://linkedin.com/company/taut-ut"
+                    href="https://linkedin.com/company/tsa-twente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 bg-neutral-800 hover:bg-turkish-red rounded-full flex items-center justify-center transition-colors"
@@ -208,7 +208,7 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
                     </svg>
                   </a>
                   <a
-                    href="https://facebook.com/tautut"
+                    href="https://facebook.com/tsatwente"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 bg-neutral-800 hover:bg-turkish-red rounded-full flex items-center justify-center transition-colors"
@@ -225,7 +225,7 @@ export default function Layout({ children, showFooter = true }: LayoutProps) {
             {/* Bottom Bar */}
             <div className="border-t border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center">
               <p className="text-neutral-500 text-sm text-center md:text-left">
-                &copy; {new Date().getFullYear()} TAUT - Turkish Association at University of Twente. All rights reserved.
+                &copy; {new Date().getFullYear()} TSA TWENTE - Turkish Student Association at University of Twente. All rights reserved.
               </p>
               <p className="text-neutral-600 text-xs mt-2 md:mt-0">
                 Hoşgeldiniz - Welcome 🇹🇷

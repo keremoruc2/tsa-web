@@ -1,7 +1,7 @@
 {
-  "name": "TAUT",
-  "short_name": "TAUT",
-  "description": "Turkish Association at University of Twente",
+  "name": "TSA TWENTE",
+  "short_name": "TSA TWENTE",
+  "description": "Turkish Student Association at University of Twente",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

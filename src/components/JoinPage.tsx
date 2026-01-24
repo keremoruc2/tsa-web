@@ -96,7 +96,7 @@ export default function JoinPage() {
     <Layout>
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 px-4 bg-gradient-to-br from-turkish-red via-red-600 to-red-700 text-white">
+        <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
@@ -109,7 +109,7 @@ export default function JoinPage() {
               Become a Member
             </h1>
             <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-              Join TAUT and be part of our vibrant Turkish community at the University of Twente
+              Join TSA TWENTE and be part of our vibrant Turkish community at the University of Twente
             </p>
           </div>
         </section>
@@ -174,7 +174,7 @@ export default function JoinPage() {
                   We&apos;ll be in touch with you soon!
                 </p>
                 <p className="text-green-600 text-sm">
-                  Hoşgeldiniz - Welcome to TAUT! 🇹🇷
+                  Hoşgeldiniz - Welcome to TSA TWENTE! 🇹🇷
                 </p>
               </div>
             ) : (
@@ -275,7 +275,7 @@ export default function JoinPage() {
                 {/* Interests */}
                 <div>
                   <label htmlFor="interests" className="block text-sm font-medium text-neutral-700 mb-2">
-                    Why do you want to join TAUT?
+                    Why do you want to join TSA TWENTE?
                   </label>
                   <textarea
                     id="interests"
@@ -284,7 +284,7 @@ export default function JoinPage() {
                     onChange={handleChange}
                     rows={4}
                     className="w-full px-4 py-3 border border-neutral-300 rounded-lg transition-colors resize-none"
-                    placeholder="Tell us about your interests and what you hope to get from joining TAUT..."
+                    placeholder="Tell us about your interests and what you hope to get from joining TSA TWENTE..."
                   />
                 </div>
 
@@ -320,7 +320,7 @@ export default function JoinPage() {
                 </button>
 
                 <p className="text-center text-neutral-500 text-sm">
-                  By submitting, you agree to receive communications from TAUT
+                  By submitting, you agree to receive communications from TSA TWENTE
                 </p>
               </form>
             )}

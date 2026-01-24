@@ -56,9 +56,9 @@ export async function sendMembershipNotification(data: {
   studyProgram?: string;
   interests?: string;
 }): Promise<boolean> {
-  const adminEmail = process.env.ADMIN_EMAIL || 'info@taut.nl';
+  const adminEmail = process.env.ADMIN_EMAIL || 'info@tsatwente.nl';
   
-  const subject = `New TAUT Membership Request: ${data.name}`;
+  const subject = `New TSA TWENTE Membership Request: ${data.name}`;
   const text = `
 New membership request received!
 
@@ -70,7 +70,7 @@ Study Program: ${data.studyProgram || 'Not provided'}
 Interests: ${data.interests || 'Not provided'}
 
 ---
-This is an automated email from the TAUT website.
+This is an automated email from the TSA TWENTE website.
   `.trim();
 
   const html = `
@@ -101,7 +101,7 @@ This is an automated email from the TAUT website.
       <div class="field"><span class="label">Interests:</span> ${data.interests || 'Not provided'}</div>
     </div>
     <div class="footer">
-      This is an automated email from the TAUT website.
+      This is an automated email from the TSA TWENTE website.
     </div>
   </div>
 </body>

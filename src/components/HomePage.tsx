@@ -41,10 +41,10 @@ export default function HomePage() {
             Hoşgeldiniz!
           </h1>
           <p className="text-xl md:text-2xl lg:text-3xl font-light mb-4 opacity-90 animate-fade-in">
-            Welcome to TAUT
+            Welcome to TSA TWENTE
           </p>
           <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10 opacity-80 font-light animate-fade-in">
-            The Turkish Association at University of Twente. We bring together students and 
+            Turkish Student Association at University of Twente. We bring together students and 
             community members to celebrate Turkish culture, build friendships, and create 
             unforgettable memories.
           </p>
@@ -86,7 +86,7 @@ export default function HomePage() {
                 Building Bridges Between Cultures
               </h2>
               <p className="text-neutral-600 mb-6 leading-relaxed">
-                TAUT is the official Turkish Association at the University of Twente. Founded by students 
+                TSA TWENTE is the official Turkish Student Association at the University of Twente. Founded by students 
                 who wanted to share the richness of Turkish culture with the university community, we&apos;ve 
                 grown into a vibrant organization that welcomes everyone.
               </p>
@@ -243,13 +243,13 @@ export default function HomePage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-turkish-red">
+      <section className="py-12 px-4 bg-turkish-red">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Ready to Join Our Community?
           </h2>
-          <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-            Become a member of TAUT and be part of a vibrant community that celebrates 
+          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+            Become a member of TSA TWENTE and be part of a vibrant community that celebrates 
             Turkish culture at the University of Twente.
           </p>
           <Link
