@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime
+  time        String?
+  dateTBA     Boolean  @default(false)
+  venue       String?
+  location    String?
+  description String?
+  image       String?
+  gallery     String?  // Comma-separated gallery image URLs
+  hidden      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date(sort: Desc)])
+}
+
+model MembershipRequest {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  university   String?
+  studyProgram String?
+  interests    String?
+  emailSent    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  emailSent Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

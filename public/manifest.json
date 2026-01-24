@@ -1,0 +1,16 @@
+{
+  "name": "TAUT",
+  "short_name": "TAUT",
+  "description": "Turkish Association at University of Twente",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#E30A17",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
