@@ -15,7 +15,6 @@ export default function AdminNav() {
     router.refresh();
   };
 
-  const [role, setRole] = useState<string | undefined>(undefined);
   const [username, setUsername] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -23,7 +22,6 @@ export default function AdminNav() {
       .then((r) => r.json())
       .then((j) => {
         if (j?.ok) {
-          setRole(j.user?.role);
           setUsername(j.user?.username);
         }
       });
@@ -48,14 +46,6 @@ export default function AdminNav() {
           >
             Members
           </Link>
-          {(role === "SUPERADMIN" || role === "ADMIN") && (
-            <Link
-              href="/admin/users"
-              className={`text-sm ${isActive("/admin/users") ? "text-turkish-red font-medium" : "text-gray-600 hover:text-turkish-red"}`}
-            >
-              Users
-            </Link>
-          )}
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           {username && <span className="text-sm text-gray-500">@{username}</span>}
