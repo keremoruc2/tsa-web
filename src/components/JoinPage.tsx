@@ -95,66 +95,24 @@ export default function JoinPage() {
   return (
     <Layout>
       <div className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
-          </div>
+        {/* Hero Section - Compact */}
+        <section className="relative py-12 md:py-16 px-4 bg-turkish-red text-white">
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <span className="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-6">
-              🇹🇷 Join Our Community
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Become a Member
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
+              Join TSA TWENTE
             </h1>
-            <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-              Join TSA TWENTE and be part of our vibrant Turkish community at the University of Twente
+            <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
+              Sign up below and we&apos;ll contact you with more information
             </p>
           </div>
         </section>
 
-        {/* Benefits Section */}
-        <section className="py-12 px-4 bg-section-alt">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🎉</span>
-                </div>
-                <h3 className="font-bold text-neutral-900 mb-2">Exclusive Events</h3>
-                <p className="text-neutral-600 text-sm">
-                  Access to member-only events and early registration for all activities
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🤝</span>
-                </div>
-                <h3 className="font-bold text-neutral-900 mb-2">Community</h3>
-                <p className="text-neutral-600 text-sm">
-                  Connect with fellow Turkish students and culture enthusiasts
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">💫</span>
-                </div>
-                <h3 className="font-bold text-neutral-900 mb-2">Opportunities</h3>
-                <p className="text-neutral-600 text-sm">
-                  Networking, leadership roles, and personal development
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Form Section */}
-        <section className="py-16 md:py-20 px-4">
+        {/* Form Section - First */}
+        <section className="py-12 md:py-16 px-4">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-                Membership Application
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">
+                Sign Up Form
               </h2>
               <p className="text-neutral-600">
                 Fill out the form below and we&apos;ll get back to you soon!
@@ -170,7 +128,7 @@ export default function JoinPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-green-800 mb-2">Thank You!</h3>
                 <p className="text-green-700 mb-6">
-                  Your membership request has been submitted successfully. 
+                  Your sign up has been submitted successfully. 
                   We&apos;ll be in touch with you soon!
                 </p>
                 <p className="text-green-600 text-sm">
@@ -275,16 +233,16 @@ export default function JoinPage() {
                 {/* Interests */}
                 <div>
                   <label htmlFor="interests" className="block text-sm font-medium text-neutral-700 mb-2">
-                    Why do you want to join TSA TWENTE?
+                    Anything you&apos;d like us to know? (Optional)
                   </label>
                   <textarea
                     id="interests"
                     name="interests"
                     value={formData.interests}
                     onChange={handleChange}
-                    rows={4}
+                    rows={3}
                     className="w-full px-4 py-3 border border-neutral-300 rounded-lg transition-colors resize-none"
-                    placeholder="Tell us about your interests and what you hope to get from joining TSA TWENTE..."
+                    placeholder="Tell us about yourself, your interests, etc."
                   />
                 </div>
 
@@ -311,7 +269,7 @@ export default function JoinPage() {
                     </>
                   ) : (
                     <>
-                      Submit Application
+                      Sign Up
                       <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
@@ -320,10 +278,53 @@ export default function JoinPage() {
                 </button>
 
                 <p className="text-center text-neutral-500 text-sm">
-                  By submitting, you agree to receive communications from TSA TWENTE
+                  We&apos;ll contact you with more information about joining TSA TWENTE
                 </p>
               </form>
             )}
+          </div>
+        </section>
+
+        {/* Benefits Section - After Form */}
+        <section className="py-12 px-4 bg-section-alt">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">
+                Why Join Us?
+              </h2>
+              <p className="text-neutral-600">
+                Be part of our vibrant community
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
+                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🎉</span>
+                </div>
+                <h3 className="font-bold text-neutral-900 mb-2">Events & Activities</h3>
+                <p className="text-neutral-600 text-sm">
+                  Join cultural events, social gatherings, and fun activities
+                </p>
+              </div>
+              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
+                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🤝</span>
+                </div>
+                <h3 className="font-bold text-neutral-900 mb-2">Community</h3>
+                <p className="text-neutral-600 text-sm">
+                  Connect with fellow Turkish students and culture enthusiasts
+                </p>
+              </div>
+              <div className="bg-white rounded-xl p-6 text-center shadow-sm">
+                <div className="w-12 h-12 bg-turkish-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">💫</span>
+                </div>
+                <h3 className="font-bold text-neutral-900 mb-2">Opportunities</h3>
+                <p className="text-neutral-600 text-sm">
+                  Networking, leadership roles, and personal development
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </div>
