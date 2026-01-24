@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import useSWR from 'swr';
@@ -78,9 +78,14 @@ function EventCard({ event }: { event: Event }) {
 }
 
 // Past event card
-function PastEventCard({ event }: { event: PastEvent }) {
+function PastEventCard({ event, onViewGallery }: { event: PastEvent; onViewGallery: (event: PastEvent) => void }) {
+  const hasGallery = !!event.gallery;
+  
   return (
-    <div className="card rounded-xl overflow-hidden flex-shrink-0 w-80 md:w-96 snap-start group">
+    <div 
+      className={`card rounded-xl overflow-hidden flex-shrink-0 w-80 md:w-96 snap-start group ${hasGallery ? 'cursor-pointer' : ''}`}
+      onClick={() => hasGallery && onViewGallery(event)}
+    >
       <div className="relative aspect-[16/10] bg-neutral-100 overflow-hidden">
         {event.image ? (
           <Image
@@ -97,6 +102,13 @@ function PastEventCard({ event }: { event: PastEvent }) {
         <div className="absolute top-3 right-3 px-3 py-1 bg-neutral-900/80 text-white text-xs font-medium rounded-full">
           Past Event
         </div>
+        {hasGallery && (
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-lg font-medium">
+              📸 View Gallery
+            </span>
+          </div>
+        )}
       </div>
       <div className="p-6">
         <div className="flex items-center space-x-2 text-sm text-turkish-red font-medium mb-2">
@@ -121,18 +133,99 @@ function PastEventCard({ event }: { event: PastEvent }) {
             {event.description}
           </p>
         )}
-        {event.gallery && (
-          <p className="text-turkish-red text-sm font-medium">
-            📸 Gallery available
-          </p>
+        {hasGallery && (
+          <button className="text-turkish-red text-sm font-medium hover:underline">
+            📸 View Gallery ({event.gallery!.split(',').length} photos)
+          </button>
         )}
       </div>
     </div>
   );
 }
 
+// Gallery Modal
+function GalleryModal({ event, onClose }: { event: PastEvent; onClose: () => void }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = event.gallery?.split(',').map(url => url.trim()).filter(Boolean) || [];
+  
+  if (images.length === 0) return null;
+
+  const goNext = () => setCurrentIndex((i) => (i + 1) % images.length);
+  const goPrev = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={onClose}>
+      <div className="absolute top-4 right-4 z-10">
+        <button 
+          onClick={onClose}
+          className="text-white hover:text-gray-300 transition-colors"
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div className="absolute top-4 left-4 text-white">
+        <h3 className="text-xl font-bold">{event.title}</h3>
+        <p className="text-sm opacity-75">{currentIndex + 1} / {images.length}</p>
+      </div>
+
+      <div className="relative max-w-5xl max-h-[80vh] w-full mx-4" onClick={(e) => e.stopPropagation()}>
+        <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+          <Image
+            src={images[currentIndex]}
+            alt={`${event.title} - Photo ${currentIndex + 1}`}
+            fill
+            className="object-contain"
+          />
+        </div>
+        
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Thumbnail strip */}
+      {images.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 overflow-x-auto max-w-[90vw] p-2">
+          {images.map((img, i) => (
+            <button
+              key={i}
+              onClick={(e) => { e.stopPropagation(); setCurrentIndex(i); }}
+              className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${
+                i === currentIndex ? 'border-turkish-red' : 'border-transparent hover:border-white/50'
+              }`}
+            >
+              <Image src={img} alt="" fill className="object-cover" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function EventsPage() {
   const { data, isLoading } = useSWR<EventsApiResponse>("/api/events", fetcher);
+  const [selectedGalleryEvent, setSelectedGalleryEvent] = useState<PastEvent | null>(null);
 
   const upcomingEvents = data?.upcoming || [];
   const pastEvents = data?.past || [];
@@ -151,6 +244,11 @@ export default function EventsPage() {
 
   return (
     <Layout>
+      {/* Gallery Modal */}
+      {selectedGalleryEvent && (
+        <GalleryModal event={selectedGalleryEvent} onClose={() => setSelectedGalleryEvent(null)} />
+      )}
+
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
@@ -313,7 +411,7 @@ export default function EventsPage() {
 
               <ScrollableEventGrid>
                 {pastEvents.map((event) => (
-                  <PastEventCard key={event.id} event={event} />
+                  <PastEventCard key={event.id} event={event} onViewGallery={setSelectedGalleryEvent} />
                 ))}
               </ScrollableEventGrid>
             </div>
