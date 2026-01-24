@@ -34,6 +34,8 @@ export async function getEvents(): Promise<{ upcoming: EventType[]; past: PastEv
     location: e.location,
     description: e.description,
     image: e.image,
+    buttonText: e.buttonText,
+    buttonUrl: e.buttonUrl,
   }));
 
   const past: PastEventType[] = pastRows.map((e) => ({

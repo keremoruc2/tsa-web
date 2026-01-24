@@ -34,6 +34,8 @@ export async function GET() {
       location: e.location,
       description: e.description,
       image: e.image,
+      buttonText: e.buttonText,
+      buttonUrl: e.buttonUrl,
       hidden: e.hidden,
     }));
 
@@ -84,6 +86,8 @@ export async function POST(request: Request) {
             location: data.location || null,
             description: data.description || null,
             image: data.image || null,
+            buttonText: data.buttonText || null,
+            buttonUrl: data.buttonUrl || null,
             hidden: data.hidden || false,
           },
         });
@@ -105,6 +109,8 @@ export async function POST(request: Request) {
             location: data.location || null,
             description: data.description || null,
             image: data.image || null,
+            buttonText: data.buttonText || null,
+            buttonUrl: data.buttonUrl || null,
             hidden: data.hidden || false,
           },
         });

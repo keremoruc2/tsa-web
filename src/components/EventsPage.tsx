@@ -55,9 +55,22 @@ function EventCard({ event }: { event: Event }) {
           </p>
         )}
         {event.description && (
-          <p className="text-neutral-600 text-sm line-clamp-2">
+          <p className="text-neutral-600 text-sm line-clamp-2 mb-4">
             {event.description}
           </p>
+        )}
+        {event.buttonText && event.buttonUrl && (
+          <a
+            href={event.buttonUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-4 py-2 bg-turkish-red text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+          >
+            {event.buttonText}
+            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
         )}
       </div>
     </div>
@@ -208,15 +221,29 @@ export default function EventsPage() {
                         {nextEvent.description}
                       </p>
                     )}
-                    <Link
-                      href="/join"
-                      className="btn-primary inline-flex items-center justify-center rounded-lg w-full md:w-auto"
-                    >
-                      Join Us to Attend
-                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                    {nextEvent.buttonText && nextEvent.buttonUrl ? (
+                      <a
+                        href={nextEvent.buttonUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary inline-flex items-center justify-center rounded-lg w-full md:w-auto"
+                      >
+                        {nextEvent.buttonText}
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <Link
+                        href="/join"
+                        className="btn-primary inline-flex items-center justify-center rounded-lg w-full md:w-auto"
+                      >
+                        Join Us to Attend
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

@@ -9,6 +9,8 @@ export type Event = {
   location?: string | null;
   description?: string | null;
   image?: string | null;
+  buttonText?: string | null; // Max 30 characters
+  buttonUrl?: string | null;
   hidden?: boolean;
 };
 

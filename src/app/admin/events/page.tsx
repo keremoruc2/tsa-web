@@ -14,6 +14,8 @@ type UpcomingEvent = {
   location?: string;
   description?: string;
   image?: string;
+  buttonText?: string;
+  buttonUrl?: string;
   hidden?: boolean;
 };
 
@@ -76,6 +78,8 @@ export default function EventsAdminPage() {
     location: "",
     description: "",
     image: "",
+    buttonText: "",
+    buttonUrl: "",
     hidden: false,
   };
 
@@ -344,6 +348,39 @@ export default function EventsAdminPage() {
                       placeholder="Event description..."
                     />
                   </div>
+
+                  {tab === "upcoming" && "buttonText" in editing && (
+                    <div className="p-4 bg-gray-50 rounded-lg space-y-4">
+                      <p className="text-sm font-medium text-gray-700">Action Button (optional)</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm text-gray-600 mb-1">Button Text (max 30 chars)</label>
+                          <input
+                            type="text"
+                            value={editing.buttonText || ""}
+                            onChange={(e) => setEditing({ ...editing, buttonText: e.target.value.slice(0, 30) })}
+                            maxLength={30}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent"
+                            placeholder="e.g., Get Tickets, RSVP"
+                          />
+                          <p className="text-xs text-gray-400 mt-1">{(editing.buttonText?.length || 0)}/30</p>
+                        </div>
+                        <div>
+                          <label className="block text-sm text-gray-600 mb-1">Button URL</label>
+                          <input
+                            type="url"
+                            value={editing.buttonUrl || ""}
+                            onChange={(e) => setEditing({ ...editing, buttonUrl: e.target.value })}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent"
+                            placeholder="https://..."
+                          />
+                        </div>
+                      </div>
+                      {editing.buttonText && !editing.buttonUrl && (
+                        <p className="text-xs text-amber-600">⚠️ Add a URL for the button to work</p>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Image</label>
