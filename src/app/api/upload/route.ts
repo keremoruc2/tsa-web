@@ -11,6 +11,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
 
+  // Debug: Log environment info
+  const hasToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+  const tokenPrefix = process.env.BLOB_READ_WRITE_TOKEN?.substring(0, 20);
+  console.log('Upload attempt - Token exists:', hasToken, 'Token prefix:', tokenPrefix);
+
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
@@ -38,9 +43,20 @@ export async function POST(request: Request) {
 
     // Upload to Vercel Blob
     try {
+      // Explicitly pass the token if available
+      const token = process.env.BLOB_READ_WRITE_TOKEN;
+      
+      if (!token) {
+        return NextResponse.json({ 
+          ok: false, 
+          error: 'BLOB_READ_WRITE_TOKEN not found in environment variables. Please add it to Vercel Environment Variables and redeploy.' 
+        }, { status: 500 });
+      }
+
       const blob = await put(filename, file, {
         access: 'public',
         addRandomSuffix: false,
+        token: token, // Explicitly pass the token
       });
 
       return NextResponse.json({ 
