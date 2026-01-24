@@ -1,16 +1,16 @@
-# TAUT - Turkish Association at University of Twente
+# TSA TWENTE - Turkish Student Association
 
-🇹🇷 Official website for the Turkish Association at University of Twente (TAUT).
+🇹🇷 Official website for TSA TWENTE - Turkish Student Association at University of Twente.
 
 ## Features
 
-- **Home Page**: Welcoming hero section with information about the association
-- **About Page**: Mission, values, and activities of TAUT
-- **Events Page**: Upcoming events with scrollable grid and past events gallery
-- **Join Us Page**: Membership application form with email notifications
+- **Home Page**: Welcoming hero section with upcoming events preview
+- **About Page**: Mission, values, and activities of TSA TWENTE
+- **Events Page**: Upcoming events with featured section, past events gallery
+- **Join Us Page**: Membership sign-up form with email confirmations
 - **Contact Page**: Contact information, social media links, and FAQ
+- **Admin Panel**: Secure login, events management (CRUD), membership requests viewer
 - **Responsive Design**: Mobile-first approach with Turkish Red/White theme
-- **Database Integration**: PostgreSQL with Prisma ORM for events and membership requests
 
 ## Tech Stack
 
@@ -18,75 +18,125 @@
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS 4
 - **Database**: PostgreSQL with [Prisma](https://www.prisma.io/)
-- **Email**: Nodemailer for form notifications
+- **Email**: [Resend](https://resend.com/) for transactional emails
+- **Image Storage**: [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
+- **Data Fetching**: SWR for client-side data
+
+## Database Schema
+
+| Table | Purpose |
+|-------|---------|
+| `User` | Admin users with roles (SUPERADMIN, ADMIN, EDITOR) |
+| `Session` | Login sessions with expiry |
+| `Event` | Upcoming events with date, time, venue, description, image |
+| `PastEvent` | Past events with gallery support |
+| `MembershipRequest` | Sign-up form submissions |
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ 
-- PostgreSQL database (or use a cloud service like [Neon](https://neon.tech/), [Supabase](https://supabase.com/), or [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres))
+- PostgreSQL database (or use [Supabase](https://supabase.com/), [Neon](https://neon.tech/), or [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres))
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   cd tsa-web
-   ```
-
-2. **Install dependencies**
+1. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Set up environment variables**
+2. **Set up environment variables**
    ```bash
    cp .env.example .env
    ```
    
-   Edit `.env` with your database connection string and SMTP settings:
+   Edit `.env` with your credentials:
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/taut_db?schema=public"
-   
-   # Optional - for email notifications
-   SMTP_HOST="smtp.gmail.com"
-   SMTP_PORT="587"
-   SMTP_USER="your-email@gmail.com"
-   SMTP_PASS="your-app-password"
-   ADMIN_EMAIL="info@taut.nl"
+   DATABASE_URL="postgresql://..."
+   RESEND_API_KEY="re_..."
+   ADMIN_EMAIL="tsatwente@gmail.com"
+   BLOB_READ_WRITE_TOKEN="vercel_blob_..."
    ```
 
-4. **Set up the database**
+3. **Push database schema**
    ```bash
-   # Generate Prisma client
-   npx prisma generate
-   
-   # Run migrations
-   npx prisma migrate dev --name init
-   
-   # (Optional) Seed with sample data
-   npm run db:seed
+   npx prisma db push
    ```
 
-5. **Start the development server**
+4. **Start development server**
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+5. **First-time admin setup**
+   - Go to `/admin`
+   - Login with `admin` / `admin`
+   - This creates the initial SUPERADMIN user
+   - **Important**: Change the password immediately!
 
-## Available Scripts
+## Setting Up Services
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run db:studio` | Open Prisma Studio (database GUI) |
-| `npm run db:seed` | Seed database with sample data |
-| `npx prisma migrate dev` | Create and run migrations |
+### Database (Supabase - Recommended)
+
+1. Create account at [supabase.com](https://supabase.com/)
+2. Create a new project
+3. Go to Settings > Database
+4. Copy the "Connection string (URI)" 
+5. Replace `[YOUR-PASSWORD]` with your database password
+6. Add to `.env` as `DATABASE_URL`
+
+### Email (Resend)
+
+1. Create account at [resend.com](https://resend.com/)
+2. Go to API Keys > Create API Key
+3. Copy the key and add to `.env` as `RESEND_API_KEY`
+4. For production: verify your domain in Resend dashboard
+
+### Image Storage (Vercel Blob)
+
+1. Deploy to Vercel
+2. Go to Storage > Create Database > Blob
+3. Blob storage is automatically connected when deployed to Vercel
+4. For local development: copy the token from Storage > Settings
+
+## Admin Panel
+
+Access at `/admin`:
+
+- **Events**: Add, edit, delete upcoming and past events
+- **Members**: View membership requests and email status
+- **Users**: (Superadmin only) Manage admin users
+
+### User Roles
+
+| Role | Permissions |
+|------|-------------|
+| SUPERADMIN | Full access, manage users |
+| ADMIN | Manage events and members |
+| EDITOR | Edit events only |
+
+## Deployment to Vercel
+
+1. Push code to GitHub
+2. Import project in Vercel
+3. Add environment variables in Vercel dashboard:
+   - `DATABASE_URL`
+   - `RESEND_API_KEY`
+   - `RESEND_FROM_EMAIL`
+   - `ADMIN_EMAIL`
+4. Create Blob storage in Vercel (Storage > Blob)
+5. Deploy!
+
+## Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run db:push      # Push schema changes to database
+npm run db:studio    # Open Prisma Studio (database GUI)
+```
 
 ## Project Structure
 
@@ -95,129 +145,18 @@ tsa-web/
 ├── prisma/
 │   └── schema.prisma      # Database schema
 ├── public/
-│   └── manifest.json      # PWA manifest
-├── scripts/
-│   └── seed.ts            # Database seeding script
+│   └── images/            # Static images (logo)
 ├── src/
 │   ├── app/
+│   │   ├── admin/         # Admin pages
 │   │   ├── api/           # API routes
-│   │   │   ├── events/    # Events API
-│   │   │   └── join/      # Membership form API
-│   │   ├── about/         # About page
-│   │   ├── contact/       # Contact page
-│   │   ├── events/        # Events page
-│   │   ├── join/          # Join Us page
-│   │   ├── globals.css    # Global styles
-│   │   ├── layout.tsx     # Root layout
-│   │   └── page.tsx       # Home page
-│   ├── components/
-│   │   ├── AboutPage.tsx
-│   │   ├── ContactPage.tsx
-│   │   ├── EventsPage.tsx
-│   │   ├── HomePage.tsx
-│   │   ├── JoinPage.tsx
-│   │   ├── Layout.tsx     # Navbar & Footer
-│   │   └── ScrollableEventGrid.tsx
-│   ├── lib/
-│   │   ├── email.ts       # Email utilities
-│   │   ├── events.ts      # Event queries
-│   │   └── prisma.ts      # Prisma client
-│   ├── types/
-│   │   └── events.ts      # TypeScript types
-│   └── utils/
-│       └── date.ts        # Date formatting
-├── .env.example
-├── package.json
-├── tailwind.config.js
-└── tsconfig.json
+│   │   └── ...            # Public pages
+│   ├── components/        # React components
+│   ├── lib/               # Utilities (auth, email, prisma)
+│   └── types/             # TypeScript types
+└── .env                   # Environment variables
 ```
-
-## Database Schema
-
-### Event
-- `id`: Auto-incrementing primary key
-- `title`: Event name
-- `date`: Event date/time
-- `time`: Display time string
-- `dateTBA`: Whether date is TBA
-- `venue`: Venue name
-- `location`: Location address
-- `description`: Event description
-- `image`: Image URL
-- `gallery`: Gallery links (comma-separated)
-- `hidden`: Whether event is hidden
-
-### MembershipRequest
-- `id`: CUID primary key
-- `name`: Full name
-- `email`: Email address
-- `phone`: Phone number
-- `university`: University/school
-- `studyProgram`: Study program
-- `interests`: Why they want to join
-- `emailSent`: Whether notification was sent
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import the repository in [Vercel](https://vercel.com/)
-3. Add environment variables in Project Settings
-4. Deploy!
-
-Vercel will automatically:
-- Build the Next.js application
-- Run Prisma migrations (via `postinstall` script)
-- Set up serverless functions for API routes
-
-### Environment Variables for Production
-
-Set these in your Vercel project settings:
-
-| Variable | Description |
-|----------|-------------|
-| `DATABASE_URL` | PostgreSQL connection string |
-| `SMTP_HOST` | SMTP server hostname |
-| `SMTP_PORT` | SMTP port (usually 587) |
-| `SMTP_USER` | SMTP username/email |
-| `SMTP_PASS` | SMTP password/app password |
-| `ADMIN_EMAIL` | Email to receive membership notifications |
-
-## Color Theme
-
-The website uses the Turkish flag colors:
-
-- **Turkish Red**: `#E30A17`
-- **White**: `#FFFFFF`
-
-These are defined in `tailwind.config.js` and `globals.css`.
-
-## Email Configuration
-
-### Gmail Setup
-
-1. Enable 2-Factor Authentication on your Google account
-2. Generate an App Password: Google Account → Security → App passwords
-3. Use the app password as `SMTP_PASS`
-
-### Development Mode
-
-Without SMTP configuration, emails are logged to the console instead of being sent.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
 
 ## License
 
-This project is private and intended for TAUT use only.
-
----
-
-Built with ❤️ for the Turkish community at University of Twente
-
-🇹🇷 Hoşgeldiniz - Welcome! 🇳🇱
+Private - TSA TWENTE © 2026

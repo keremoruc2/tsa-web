@@ -8,7 +8,7 @@ interface FormData {
   phone: string;
   university: string;
   studyProgram: string;
-  interests: string;
+  notes: string;
 }
 
 interface FormErrors {
@@ -23,11 +23,12 @@ export default function JoinPage() {
     phone: '',
     university: '',
     studyProgram: '',
-    interests: '',
+    notes: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -62,9 +63,10 @@ export default function JoinPage() {
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
     try {
-      const response = await fetch('/api/join', {
+      const response = await fetch('/api/membership', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +74,9 @@ export default function JoinPage() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.ok) {
         setSubmitStatus('success');
         setFormData({
           name: '',
@@ -80,13 +84,15 @@ export default function JoinPage() {
           phone: '',
           university: '',
           studyProgram: '',
-          interests: '',
+          notes: '',
         });
       } else {
         setSubmitStatus('error');
+        setErrorMessage(result.error || 'Something went wrong. Please try again.');
       }
     } catch {
       setSubmitStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -230,15 +236,15 @@ export default function JoinPage() {
                   />
                 </div>
 
-                {/* Interests */}
+                {/* Notes */}
                 <div>
-                  <label htmlFor="interests" className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="notes" className="block text-sm font-medium text-neutral-700 mb-2">
                     Anything you&apos;d like us to know? (Optional)
                   </label>
                   <textarea
-                    id="interests"
-                    name="interests"
-                    value={formData.interests}
+                    id="notes"
+                    name="notes"
+                    value={formData.notes}
                     onChange={handleChange}
                     rows={3}
                     className="w-full px-4 py-3 border border-neutral-300 rounded-lg transition-colors resize-none"
@@ -249,7 +255,7 @@ export default function JoinPage() {
                 {/* Submit Error */}
                 {submitStatus === 'error' && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-                    Something went wrong. Please try again later or contact us directly.
+                    {errorMessage || 'Something went wrong. Please try again later or contact us directly.'}
                   </div>
                 )}
 

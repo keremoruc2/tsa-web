@@ -3,14 +3,15 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import useSWR from 'swr';
-import type { EventsApiResponse, Event } from '@/types/events';
+import type { EventsApiResponse, Event, PastEvent } from '@/types/events';
 import { formatDateOnlyHuman } from '@/utils/date';
 import ScrollableEventGrid from './ScrollableEventGrid';
 import Layout from './Layout';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-function EventCard({ event, isPast = false }: { event: Event; isPast?: boolean }) {
+// Upcoming event card
+function EventCard({ event }: { event: Event }) {
   const formatTime = (time?: string | null) => {
     if (!time) return '';
     return time;
@@ -29,11 +30,6 @@ function EventCard({ event, isPast = false }: { event: Event; isPast?: boolean }
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-turkish-red to-red-700 flex items-center justify-center">
             <span className="text-5xl">🇹🇷</span>
-          </div>
-        )}
-        {isPast && (
-          <div className="absolute top-3 right-3 px-3 py-1 bg-neutral-900/80 text-white text-xs font-medium rounded-full">
-            Past Event
           </div>
         )}
       </div>
@@ -59,11 +55,60 @@ function EventCard({ event, isPast = false }: { event: Event; isPast?: boolean }
           </p>
         )}
         {event.description && (
+          <p className="text-neutral-600 text-sm line-clamp-2">
+            {event.description}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Past event card
+function PastEventCard({ event }: { event: PastEvent }) {
+  return (
+    <div className="card rounded-xl overflow-hidden flex-shrink-0 w-80 md:w-96 snap-start group">
+      <div className="relative aspect-[16/10] bg-neutral-100 overflow-hidden">
+        {event.image ? (
+          <Image
+            src={event.image}
+            alt={event.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-turkish-red to-red-700 flex items-center justify-center">
+            <span className="text-5xl">🇹🇷</span>
+          </div>
+        )}
+        <div className="absolute top-3 right-3 px-3 py-1 bg-neutral-900/80 text-white text-xs font-medium rounded-full">
+          Past Event
+        </div>
+      </div>
+      <div className="p-6">
+        <div className="flex items-center space-x-2 text-sm text-turkish-red font-medium mb-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>{formatDateOnlyHuman(event.date)}</span>
+        </div>
+        <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-turkish-red transition-colors">
+          {event.title}
+        </h3>
+        {event.location && (
+          <p className="text-sm text-neutral-500 flex items-center space-x-1 mb-3">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            <span>{event.location}</span>
+          </p>
+        )}
+        {event.description && (
           <p className="text-neutral-600 text-sm line-clamp-2 mb-4">
             {event.description}
           </p>
         )}
-        {event.gallery && isPast && (
+        {event.gallery && (
           <p className="text-turkish-red text-sm font-medium">
             📸 Gallery available
           </p>
@@ -241,7 +286,7 @@ export default function EventsPage() {
 
               <ScrollableEventGrid>
                 {pastEvents.map((event) => (
-                  <EventCard key={event.id} event={event} isPast />
+                  <PastEventCard key={event.id} event={event} />
                 ))}
               </ScrollableEventGrid>
             </div>

@@ -3,9 +3,42 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
+
+// ============ AUTH ============
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String    @id @default(cuid())
+  username     String    @unique
+  passwordHash String
+  role         Role      @default(EDITOR)
+  email        String?   @unique
+  firstName    String?
+  lastName     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+  createdAt    DateTime @default(now())
+}
+
+// ============ EVENTS ============
 
 model Event {
   id          Int      @id @default(autoincrement())
@@ -17,7 +50,6 @@ model Event {
   location    String?
   description String?
   image       String?
-  gallery     String?  // Comma-separated gallery image URLs
   hidden      Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -25,24 +57,33 @@ model Event {
   @@index([date(sort: Desc)])
 }
 
-model MembershipRequest {
-  id           String   @id @default(cuid())
-  name         String
-  email        String
-  phone        String?
-  university   String?
-  studyProgram String?
-  interests    String?
-  emailSent    Boolean  @default(false)
-  createdAt    DateTime @default(now())
+model PastEvent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime
+  venue       String?
+  location    String?
+  image       String?
+  gallery     String?  // Comma-separated gallery image URLs
+  description String?
+  hidden      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date(sort: Desc)])
 }
 
-model ContactSubmission {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  subject   String
-  message   String
-  emailSent Boolean  @default(false)
-  createdAt DateTime @default(now())
+// ============ MEMBERSHIP ============
+
+model MembershipRequest {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  university     String?
+  studyProgram   String?
+  notes          String?
+  userEmailSent  Boolean  @default(false)
+  adminEmailSent Boolean  @default(false)
+  createdAt      DateTime @default(now())
 }

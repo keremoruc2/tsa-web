@@ -1,42 +1,51 @@
 import { prisma } from '@/lib/prisma';
-import type { Event as EventType } from '@/types/events';
+import type { Event as EventType, PastEvent as PastEventType } from '@/types/events';
 import { toDateOnlyString } from '@/utils/date';
 
-export async function getEvents(): Promise<{ upcoming: EventType[]; past: EventType[] }> {
+export async function getEvents(): Promise<{ upcoming: EventType[]; past: PastEventType[] }> {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  const allEvents = await prisma.event.findMany({
+  // Fetch upcoming events (future dates, not hidden)
+  const upcomingRows = await prisma.event.findMany({
+    where: { 
+      hidden: false,
+      OR: [
+        { date: { gte: now } },
+        { dateTBA: true }
+      ]
+    },
+    orderBy: { date: 'asc' },
+  });
+
+  // Fetch past events from PastEvent table
+  const pastRows = await prisma.pastEvent.findMany({
     where: { hidden: false },
     orderBy: { date: 'desc' },
   });
 
-  const upcoming: EventType[] = [];
-  const past: EventType[] = [];
+  const upcoming: EventType[] = upcomingRows.map((e) => ({
+    id: e.id,
+    title: e.title,
+    date: toDateOnlyString(e.date),
+    time: e.time,
+    dateTBA: e.dateTBA,
+    venue: e.venue,
+    location: e.location,
+    description: e.description,
+    image: e.image,
+  }));
 
-  for (const e of allEvents) {
-    const eventData: EventType = {
-      id: e.id,
-      title: e.title,
-      date: toDateOnlyString(e.date),
-      time: e.time,
-      dateTBA: e.dateTBA,
-      venue: e.venue,
-      location: e.location,
-      description: e.description,
-      image: e.image,
-      gallery: e.gallery,
-    };
-
-    if (e.date >= now || e.dateTBA) {
-      upcoming.push(eventData);
-    } else {
-      past.push(eventData);
-    }
-  }
-
-  // Sort upcoming by date ascending (nearest first)
-  upcoming.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const past: PastEventType[] = pastRows.map((e) => ({
+    id: e.id,
+    title: e.title,
+    date: toDateOnlyString(e.date),
+    venue: e.venue,
+    location: e.location,
+    image: e.image,
+    gallery: e.gallery,
+    description: e.description,
+  }));
 
   return { upcoming, past };
 }
