@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import useSWR from 'swr';
@@ -78,21 +78,18 @@ function EventCard({ event }: { event: Event }) {
 }
 
 // Past event card
-function PastEventCard({ event, onViewGallery }: { event: PastEvent; onViewGallery: (event: PastEvent) => void }) {
+function PastEventCard({ event }: { event: PastEvent }) {
   const hasGallery = !!event.gallery;
   
   return (
-    <div 
-      className={`card rounded-xl overflow-hidden flex-shrink-0 w-80 md:w-96 snap-start group ${hasGallery ? 'cursor-pointer' : ''}`}
-      onClick={() => hasGallery && onViewGallery(event)}
-    >
+    <div className="card rounded-xl overflow-hidden flex-shrink-0 w-80 md:w-96 snap-start group/card">
       <div className="relative aspect-[16/10] bg-neutral-100 overflow-hidden">
         {event.image ? (
           <Image
             src={event.image}
             alt={event.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            className="object-cover group-hover/card:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-turkish-red to-red-700 flex items-center justify-center">
@@ -102,13 +99,6 @@ function PastEventCard({ event, onViewGallery }: { event: PastEvent; onViewGalle
         <div className="absolute top-3 right-3 px-3 py-1 bg-neutral-900/80 text-white text-xs font-medium rounded-full">
           Past Event
         </div>
-        {hasGallery && (
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-lg font-medium">
-              📸 View Gallery
-            </span>
-          </div>
-        )}
       </div>
       <div className="p-6">
         <div className="flex items-center space-x-2 text-sm text-turkish-red font-medium mb-2">
@@ -117,7 +107,7 @@ function PastEventCard({ event, onViewGallery }: { event: PastEvent; onViewGalle
           </svg>
           <span>{formatDateOnlyHuman(event.date)}</span>
         </div>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-turkish-red transition-colors">
+        <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover/card:text-turkish-red transition-colors">
           {event.title}
         </h3>
         {event.location && (
@@ -134,98 +124,25 @@ function PastEventCard({ event, onViewGallery }: { event: PastEvent; onViewGalle
           </p>
         )}
         {hasGallery && (
-          <button className="text-turkish-red text-sm font-medium hover:underline">
-            📸 View Gallery ({event.gallery!.split(',').length} photos)
-          </button>
+          <a 
+            href={event.gallery!}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-turkish-red text-sm font-medium hover:underline"
+          >
+            📸 View Gallery
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
         )}
       </div>
-    </div>
-  );
-}
-
-// Gallery Modal
-function GalleryModal({ event, onClose }: { event: PastEvent; onClose: () => void }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const images = event.gallery?.split(',').map(url => url.trim()).filter(Boolean) || [];
-  
-  if (images.length === 0) return null;
-
-  const goNext = () => setCurrentIndex((i) => (i + 1) % images.length);
-  const goPrev = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length);
-
-  return (
-    <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={onClose}>
-      <div className="absolute top-4 right-4 z-10">
-        <button 
-          onClick={onClose}
-          className="text-white hover:text-gray-300 transition-colors"
-        >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      
-      <div className="absolute top-4 left-4 text-white">
-        <h3 className="text-xl font-bold">{event.title}</h3>
-        <p className="text-sm opacity-75">{currentIndex + 1} / {images.length}</p>
-      </div>
-
-      <div className="relative max-w-5xl max-h-[80vh] w-full mx-4" onClick={(e) => e.stopPropagation()}>
-        <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-          <Image
-            src={images[currentIndex]}
-            alt={`${event.title} - Photo ${currentIndex + 1}`}
-            fill
-            className="object-contain"
-          />
-        </div>
-        
-        {images.length > 1 && (
-          <>
-            <button
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </>
-        )}
-      </div>
-
-      {/* Thumbnail strip */}
-      {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 overflow-x-auto max-w-[90vw] p-2">
-          {images.map((img, i) => (
-            <button
-              key={i}
-              onClick={(e) => { e.stopPropagation(); setCurrentIndex(i); }}
-              className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${
-                i === currentIndex ? 'border-turkish-red' : 'border-transparent hover:border-white/50'
-              }`}
-            >
-              <Image src={img} alt="" fill className="object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
 
 export default function EventsPage() {
   const { data, isLoading } = useSWR<EventsApiResponse>("/api/events", fetcher);
-  const [selectedGalleryEvent, setSelectedGalleryEvent] = useState<PastEvent | null>(null);
 
   const upcomingEvents = data?.upcoming || [];
   const pastEvents = data?.past || [];
@@ -244,11 +161,6 @@ export default function EventsPage() {
 
   return (
     <Layout>
-      {/* Gallery Modal */}
-      {selectedGalleryEvent && (
-        <GalleryModal event={selectedGalleryEvent} onClose={() => setSelectedGalleryEvent(null)} />
-      )}
-
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative py-16 md:py-24 px-4 bg-turkish-red text-white">
@@ -411,7 +323,7 @@ export default function EventsPage() {
 
               <ScrollableEventGrid>
                 {pastEvents.map((event) => (
-                  <PastEventCard key={event.id} event={event} onViewGallery={setSelectedGalleryEvent} />
+                  <PastEventCard key={event.id} event={event} />
                 ))}
               </ScrollableEventGrid>
             </div>

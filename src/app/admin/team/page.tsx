@@ -140,10 +140,10 @@ function DetailModal({
   );
 }
 
-export default function MembersAdminPage() {
+export default function TeamAdminPage() {
   const router = useRouter();
   const { data, isLoading, error, mutate } = useSWR<{ ok: boolean; applications: Application[] }>(
-    "/api/applications?type=MEMBER",
+    "/api/applications?type=TEAM",
     fetcher,
     { onError: (err) => { if (err.message === "Unauthorized") router.replace("/admin"); } }
   );
@@ -176,7 +176,7 @@ export default function MembersAdminPage() {
         <AdminNav />
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            Failed to load member applications.
+            Failed to load team applications.
           </div>
         </div>
       </div>
@@ -184,32 +184,6 @@ export default function MembersAdminPage() {
   }
 
   const applications = data.applications;
-
-  // Show "Coming Soon" message if no membership applications exist
-  if (applications.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <AdminNav />
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">Member Applications</h1>
-          
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-              </svg>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Membership Not Yet Open</h2>
-            <p className="text-gray-500 max-w-md mx-auto">
-              Paid memberships are coming soon. When you enable memberships on the website, 
-              applications will appear here for you to manage.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const pendingCount = applications.filter(a => a.status === "PENDING").length;
   const acceptedCount = applications.filter(a => a.status === "ACCEPTED").length;
   const rejectedCount = applications.filter(a => a.status === "REJECTED").length;
@@ -226,7 +200,7 @@ export default function MembersAdminPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Member Applications</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Team Applications</h1>
             <p className="text-gray-500 text-sm mt-1">
               {pendingCount} pending • {acceptedCount} accepted • {rejectedCount} rejected
             </p>
@@ -253,7 +227,7 @@ export default function MembersAdminPage() {
         <div className="bg-white rounded-lg shadow overflow-hidden">
           {filteredApplications.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              No {filter === "all" ? "" : filter} member applications.
+              No {filter === "all" ? "" : filter} team applications.
             </div>
           ) : (
             <div className="divide-y divide-gray-100">

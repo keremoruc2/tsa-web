@@ -41,6 +41,12 @@ export default function AdminNav() {
             Events
           </Link>
           <Link
+            href="/admin/team"
+            className={`text-sm ${isActive("/admin/team") ? "text-turkish-red font-medium" : "text-gray-600 hover:text-turkish-red"}`}
+          >
+            Team
+          </Link>
+          <Link
             href="/admin/members"
             className={`text-sm ${isActive("/admin/members") ? "text-turkish-red font-medium" : "text-gray-600 hover:text-turkish-red"}`}
           >

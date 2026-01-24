@@ -77,10 +77,10 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-neutral-900 mb-1">Email</h3>
                       <a 
-                        href="mailto:info@tsatwente.nl" 
+                        href="mailto:tsatwente@gmail.com" 
                         className="text-turkish-red hover:underline"
                       >
-                        info@tsatwente.nl
+                        tsatwente@gmail.com
                       </a>
                       <p className="text-neutral-500 text-sm mt-1">
                         We typically respond within 24-48 hours
@@ -246,16 +246,16 @@ export default function ContactPage() {
               </h2>
               <p className="text-neutral-600 mb-8 text-center max-w-xl mx-auto">
                 Stay updated with our latest events, news, and community activities 
-                by following us on social media.
+                by following us on Instagram.
               </p>
 
-              <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              <div className="flex justify-center">
                   {/* Instagram */}
                   <a
-                    href="https://instagram.com/tsa_twente"
+                    href="https://instagram.com/tsatwente"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
+                    className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group max-w-sm w-full"
                   >
                     <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -266,53 +266,7 @@ export default function ContactPage() {
                       <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
                         Instagram
                       </h3>
-                      <p className="text-neutral-500 text-sm">@tsa_twente</p>
-                    </div>
-                    <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-
-                  {/* LinkedIn */}
-                  <a
-                    href="https://linkedin.com/company/tsa-twente"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-[#0077B5] rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
-                        LinkedIn
-                      </h3>
-                      <p className="text-neutral-500 text-sm">TSA Twente</p>
-                    </div>
-                    <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-
-                  {/* Facebook */}
-                  <a
-                    href="https://facebook.com/tsatwente"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center p-4 bg-neutral-50 rounded-xl hover:bg-turkish-red/5 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-[#1877F2] rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="font-semibold text-neutral-900 group-hover:text-turkish-red transition-colors">
-                        Facebook
-                      </h3>
-                      <p className="text-neutral-500 text-sm">TSA Twente</p>
+                      <p className="text-neutral-500 text-sm">@tsatwente</p>
                     </div>
                     <svg className="w-5 h-5 text-neutral-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -346,31 +300,34 @@ export default function ContactPage() {
 
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h3 className="font-semibold text-neutral-900 mb-2">
-                  Is there a membership fee?
+                  How can I join the team?
                 </h3>
                 <p className="text-neutral-600">
-                  We have a small annual membership fee that helps us organize events and 
-                  activities. Contact us for current rates.
+                  Visit our Join page and apply to join the team! We&apos;re always looking for 
+                  enthusiastic people to help organize events, manage social media, and contribute 
+                  to our community.
                 </p>
               </div>
 
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h3 className="font-semibold text-neutral-900 mb-2">
-                  How can I volunteer or help organize events?
+                  What kind of events do you organize?
                 </h3>
                 <p className="text-neutral-600">
-                  We love enthusiastic members! Send us an email or mention it in your 
-                  membership application, and we&apos;ll get you involved.
+                  We organize a variety of events including cultural celebrations, social gatherings, 
+                  networking events, and fun activities throughout the year. Follow us on Instagram 
+                  to stay updated!
                 </p>
               </div>
 
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h3 className="font-semibold text-neutral-900 mb-2">
-                  Can I attend events without being a member?
+                  What do I get from joining the team?
                 </h3>
                 <p className="text-neutral-600">
-                  Some events are open to everyone, while others are member-only. 
-                  Check our events page for details on each event.
+                  You&apos;ll gain valuable experience in event organization, build leadership skills, 
+                  expand your network, and have the opportunity to become a future board member. 
+                  Plus, you&apos;ll be part of an amazing community!
                 </p>
               </div>
             </div>
@@ -384,13 +341,13 @@ export default function ContactPage() {
               Ready to Join?
             </h2>
             <p className="text-xl opacity-90 mb-6 max-w-2xl mx-auto">
-              Become part of our community and experience Turkish culture with us!
+              Become part of our team and help shape the TSA TWENTE community!
             </p>
             <a
               href="/join"
               className="inline-flex items-center justify-center px-8 py-4 bg-white text-turkish-red font-bold uppercase tracking-wider rounded-lg hover:bg-neutral-100 transition-all duration-300"
             >
-              Become a Member
+              Join the Team
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
