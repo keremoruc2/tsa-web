@@ -59,6 +59,9 @@ export default function AdminNav() {
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           {username && <span className="text-sm text-gray-500">@{username}</span>}
+          <Link href="/admin/settings" className="text-sm text-gray-600 hover:text-turkish-red">
+            Settings
+          </Link>
           <Link href="/" className="text-sm text-gray-600 hover:text-turkish-red">
             View site
           </Link>
