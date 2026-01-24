@@ -1,8 +1,38 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from './Layout';
 
 export default function ContactPage() {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+        setErrorMsg(data.error || 'Failed to send message');
+      }
+    } catch {
+      setStatus('error');
+      setErrorMsg('Failed to send message. Please try again.');
+    }
+  };
+
   return (
     <Layout>
       <div className="min-h-screen bg-white">
@@ -95,17 +125,131 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Social Media */}
+              {/* Contact Form */}
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-6">
-                  Follow Us
+                  Send a Message
                 </h2>
-                <p className="text-neutral-600 mb-8">
-                  Stay updated with our latest events, news, and community activities 
-                  by following us on social media.
-                </p>
 
-                <div className="space-y-4">
+                {status === 'success' ? (
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-6 py-8 rounded-xl text-center">
+                    <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
+                    <p>Thank you for reaching out. We&apos;ll get back to you soon!</p>
+                    <button
+                      onClick={() => setStatus('idle')}
+                      className="mt-4 text-green-600 underline hover:no-underline"
+                    >
+                      Send another message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {status === 'error' && (
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                        {errorMsg}
+                      </div>
+                    )}
+
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
+                        Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        required
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent transition-all"
+                        placeholder="Your name"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        required
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent transition-all"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 mb-1">
+                        Subject
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        value={form.subject}
+                        onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent transition-all"
+                        placeholder="What is this about?"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        required
+                        rows={5}
+                        value={form.message}
+                        onChange={(e) => setForm({ ...form, message: e.target.value })}
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-turkish-red focus:border-transparent transition-all resize-none"
+                        placeholder="Your message..."
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={status === 'sending'}
+                      className="w-full bg-turkish-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    >
+                      {status === 'sending' ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="mt-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-6 text-center">
+                Follow Us
+              </h2>
+              <p className="text-neutral-600 mb-8 text-center max-w-xl mx-auto">
+                Stay updated with our latest events, news, and community activities 
+                by following us on social media.
+              </p>
+
+              <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
                   {/* Instagram */}
                   <a
                     href="https://instagram.com/tsa_twente"
@@ -175,7 +319,6 @@ export default function ContactPage() {
                     </svg>
                   </a>
                 </div>
-              </div>
             </div>
           </div>
         </section>
