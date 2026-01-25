@@ -15,9 +15,6 @@ export default function AboutPage() {
             <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
           </div>
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <span className="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-6">
-              Est. 2015
-            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               About TSA TWENTE
             </h1>
