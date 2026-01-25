@@ -1,12 +1,19 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-// Initialize Resend client
-const resend = process.env.RESEND_API_KEY 
-  ? new Resend(process.env.RESEND_API_KEY) 
+// Gmail SMTP Configuration
+// Requires: GMAIL_USER and GMAIL_APP_PASSWORD in environment variables
+const transporter = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
+  ? nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
   : null;
 
 // Email configuration
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'TSA TWENTE <noreply@tsatwente.nl>';
+const FROM_EMAIL = process.env.GMAIL_USER || 'tsatwente@gmail.com';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'tsatwente@gmail.com';
 
 interface MembershipData {
@@ -18,24 +25,31 @@ interface MembershipData {
   notes?: string;
 }
 
+interface ContactData {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
 /**
  * Send confirmation email to user when they submit membership request
  */
 export async function sendMembershipConfirmationEmail(data: MembershipData): Promise<boolean> {
-  if (!resend) {
-    console.log('[EMAIL] Resend not configured - would send confirmation to:', data.email);
-    console.log('[EMAIL] Content:', generateUserConfirmationEmail(data));
+  if (!transporter) {
+    console.log('[EMAIL] Gmail not configured - would send confirmation to:', data.email);
     return false;
   }
 
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
+    await transporter.sendMail({
+      from: `TSA TWENTE <${FROM_EMAIL}>`,
       to: data.email,
       subject: 'Welcome to TSA TWENTE! - Application Received',
       html: generateUserConfirmationEmail(data),
       text: generateUserConfirmationText(data),
     });
+    console.log('[EMAIL] Confirmation sent to:', data.email);
     return true;
   } catch (error) {
     console.error('[EMAIL] Failed to send confirmation:', error);
@@ -47,24 +61,59 @@ export async function sendMembershipConfirmationEmail(data: MembershipData): Pro
  * Send notification email to admin when someone submits membership request
  */
 export async function sendAdminNotificationEmail(data: MembershipData): Promise<boolean> {
-  if (!resend) {
-    console.log('[EMAIL] Resend not configured - would send admin notification to:', ADMIN_EMAIL);
-    console.log('[EMAIL] Content:', generateAdminNotificationEmail(data));
+  if (!transporter) {
+    console.log('[EMAIL] Gmail not configured - would send admin notification to:', ADMIN_EMAIL);
     return false;
   }
 
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
+    await transporter.sendMail({
+      from: `TSA TWENTE <${FROM_EMAIL}>`,
       to: ADMIN_EMAIL,
-      subject: `New Membership Request: ${data.name}`,
+      subject: `New Application: ${data.name}`,
       html: generateAdminNotificationEmail(data),
       text: generateAdminNotificationText(data),
       replyTo: data.email,
     });
+    console.log('[EMAIL] Admin notification sent for:', data.name);
     return true;
   } catch (error) {
     console.error('[EMAIL] Failed to send admin notification:', error);
+    return false;
+  }
+}
+
+/**
+ * Send contact form email to admin
+ */
+export async function sendContactEmail(data: ContactData): Promise<boolean> {
+  if (!transporter) {
+    console.log('[EMAIL] Gmail not configured - would send contact email to:', ADMIN_EMAIL);
+    return false;
+  }
+
+  try {
+    // Send to admin
+    await transporter.sendMail({
+      from: `TSA TWENTE <${FROM_EMAIL}>`,
+      to: ADMIN_EMAIL,
+      subject: data.subject ? `Contact Form: ${data.subject}` : `Contact Form Message from ${data.name}`,
+      html: generateContactAdminEmail(data),
+      replyTo: data.email,
+    });
+
+    // Send confirmation to user
+    await transporter.sendMail({
+      from: `TSA TWENTE <${FROM_EMAIL}>`,
+      to: data.email,
+      subject: 'Thank you for contacting TSA TWENTE',
+      html: generateContactConfirmationEmail(data),
+    });
+
+    console.log('[EMAIL] Contact emails sent for:', data.name);
+    return true;
+  } catch (error) {
+    console.error('[EMAIL] Failed to send contact email:', error);
     return false;
   }
 }
@@ -113,7 +162,7 @@ function generateUserConfirmationEmail(data: MembershipData): string {
       </div>
       <div class="footer">
         <p>Turkish Student Association at University of Twente</p>
-        <p><a href="https://tsatwente.nl">tsatwente.nl</a></p>
+        <p><a href="https://instagram.com/tsatwente">@tsatwente</a></p>
       </div>
     </div>
   </div>
@@ -137,7 +186,7 @@ TSA TWENTE Team
 
 ---
 Turkish Student Association at University of Twente
-https://tsatwente.nl
+Instagram: @tsatwente
   `.trim();
 }
 
@@ -158,7 +207,7 @@ function generateAdminNotificationEmail(data: MembershipData): string {
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>New Membership Request</title>
+  <title>New Application</title>
   <style>
     body { margin: 0; padding: 0; background: #f5f5f5; font-family: Arial, sans-serif; }
     .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
@@ -178,7 +227,7 @@ function generateAdminNotificationEmail(data: MembershipData): string {
   <div class="container">
     <div class="card">
       <div class="header">
-        <h1>🎉 New Membership Request</h1>
+        <h1>🎉 New Application</h1>
         <p>Someone wants to join TSA TWENTE!</p>
       </div>
       <div class="body">
@@ -196,12 +245,6 @@ function generateAdminNotificationEmail(data: MembershipData): string {
           <div class="field-value">${data.phone}</div>
         </div>
         ` : ''}
-        ${data.university ? `
-        <div class="field">
-          <div class="field-label">University</div>
-          <div class="field-value">${data.university}</div>
-        </div>
-        ` : ''}
         ${data.studyProgram ? `
         <div class="field">
           <div class="field-label">Study Program</div>
@@ -210,7 +253,7 @@ function generateAdminNotificationEmail(data: MembershipData): string {
         ` : ''}
         ${data.notes ? `
         <div class="field">
-          <div class="field-label">Notes</div>
+          <div class="field-label">Message</div>
           <div class="field-value">${data.notes}</div>
         </div>
         ` : ''}
@@ -237,16 +280,98 @@ function generateAdminNotificationText(data: MembershipData): string {
   });
 
   return `
-NEW MEMBERSHIP REQUEST
-======================
+NEW APPLICATION
+===============
 
 Name: ${data.name}
 Email: ${data.email}
 ${data.phone ? `Phone: ${data.phone}` : ''}
-${data.university ? `University: ${data.university}` : ''}
 ${data.studyProgram ? `Study Program: ${data.studyProgram}` : ''}
-${data.notes ? `Notes: ${data.notes}` : ''}
+${data.notes ? `Message: ${data.notes}` : ''}
 
 Received: ${timestamp}
+  `.trim();
+}
+
+function generateContactAdminEmail(data: ContactData): string {
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <div style="background: #E30A17; padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">New Contact Form Message</h1>
+  </div>
+  <div style="padding: 30px; background: #f9f9f9;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 100px;">From:</td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${data.name}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Email:</td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+          <a href="mailto:${data.email}">${data.email}</a>
+        </td>
+      </tr>
+      ${data.subject ? `
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Subject:</td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${data.subject}</td>
+      </tr>
+      ` : ''}
+    </table>
+    <div style="margin-top: 20px;">
+      <h3 style="color: #333; margin-bottom: 10px;">Message:</h3>
+      <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+        ${data.message.replace(/\n/g, '<br>')}
+      </div>
+    </div>
+  </div>
+  <div style="padding: 20px; text-align: center; color: #888; font-size: 12px;">
+    This message was sent from the TSA TWENTE website contact form.
+  </div>
+</body>
+</html>
+  `.trim();
+}
+
+function generateContactConfirmationEmail(data: ContactData): string {
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <div style="background: #E30A17; padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">TSA TWENTE</h1>
+  </div>
+  <div style="padding: 30px;">
+    <h2 style="color: #333;">Thank you for reaching out, ${data.name}!</h2>
+    <p style="color: #666; line-height: 1.6;">
+      We have received your message and will get back to you as soon as possible.
+    </p>
+    <p style="color: #666; line-height: 1.6;">
+      In the meantime, feel free to follow us on Instagram 
+      <a href="https://instagram.com/tsatwente" style="color: #E30A17;">@tsatwente</a> 
+      for the latest updates and events.
+    </p>
+    <p style="color: #666; margin-top: 24px;">
+      Best regards,<br/>
+      <strong>TSA TWENTE Team</strong>
+    </p>
+  </div>
+  <div style="padding: 20px; text-align: center; background: #f9f9f9; border-top: 1px solid #eee;">
+    <p style="color: #999; font-size: 12px; margin: 0;">
+      Turkish Student Association at University of Twente
+    </p>
+  </div>
+</body>
+</html>
   `.trim();
 }
