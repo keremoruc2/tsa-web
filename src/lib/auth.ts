@@ -34,7 +34,7 @@ export function verifyPassword(password: string, stored: string) {
 /**
  * Create a session for a user
  */
-export async function createSession(userId: string, ttlDays = 7) {
+export async function createSession(userId: string, ttlDays = 1) {
   const sessionToken = crypto.randomBytes(24).toString('hex');
   const expires = new Date(Date.now() + ttlDays * 24 * 60 * 60 * 1000);
   await prisma.session.create({ data: { sessionToken, userId, expires } });
