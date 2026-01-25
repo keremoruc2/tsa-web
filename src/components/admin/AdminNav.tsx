@@ -52,6 +52,12 @@ export default function AdminNav() {
           >
             Members
           </Link>
+          <Link
+            href="/admin/board"
+            className={`text-sm ${isActive("/admin/board") ? "text-turkish-red font-medium" : "text-gray-600 hover:text-turkish-red"}`}
+          >
+            Board
+          </Link>
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           {username && <span className="text-sm text-gray-500">@{username}</span>}

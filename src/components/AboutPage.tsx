@@ -3,8 +3,33 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from './Layout';
+import { useEffect, useState } from 'react';
+
+type BoardMember = {
+  id: string;
+  name: string;
+  role: string;
+  roles?: string | null;
+  image?: string | null;
+  order: number;
+};
 
 export default function AboutPage() {
+  const [boardMembers, setBoardMembers] = useState<BoardMember[]>([]);
+  const [loadingBoard, setLoadingBoard] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/board')
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          setBoardMembers(data.members);
+        }
+      })
+      .catch(console.error)
+      .finally(() => setLoadingBoard(false));
+  }, []);
+
   return (
     <Layout>
       <div className="min-h-screen bg-white">
@@ -176,6 +201,68 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Meet Our Board Section */}
+        <section className="py-16 md:py-20 px-4 bg-section-alt">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <span className="text-turkish-red font-semibold uppercase tracking-wider text-sm">Our Team</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mt-2">
+                Meet Our Board
+              </h2>
+              <p className="text-neutral-600 mt-4 max-w-2xl mx-auto">
+                The dedicated team behind TSA TWENTE, working to bring you the best experiences and community.
+              </p>
+            </div>
+
+            {loadingBoard ? (
+              <div className="flex justify-center">
+                <div className="animate-pulse flex gap-8">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="flex flex-col items-center">
+                      <div className="w-32 h-32 bg-gray-200 rounded-full mb-4"></div>
+                      <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
+                      <div className="h-3 w-20 bg-gray-200 rounded"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : boardMembers.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                {boardMembers.map((member) => (
+                  <div key={member.id} className="text-center group">
+                    <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
+                      <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                      <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                            <span className="text-4xl text-gray-400">👤</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <h3 className="font-bold text-neutral-900 text-lg">{member.name}</h3>
+                    <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                    {member.roles && (
+                      <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center text-neutral-500">
+                Board members coming soon.
+              </div>
+            )}
           </div>
         </section>
 

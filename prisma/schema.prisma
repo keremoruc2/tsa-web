@@ -103,3 +103,18 @@ model Application {
 
   @@index([type, status])
 }
+
+// ============ BOARD MEMBERS ============
+
+model BoardMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   // Primary role title
+  roles     String?  // Additional roles (comma-separated)
+  image     String?  // Profile photo URL
+  order     Int      @default(0) // Display order
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
