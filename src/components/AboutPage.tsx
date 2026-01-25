@@ -155,8 +155,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values Section */
-        <section className="py-16 md:py-20 px-4 bg-section-alt">
+        {/* Values Section */}
+        <section className="py-16 md:py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-turkish-red font-semibold uppercase tracking-wider text-sm">Our Values</span>
