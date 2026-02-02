@@ -119,34 +119,167 @@ export default function AboutPage() {
                 </div>
               </div>
             ) : boardMembers.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                {boardMembers.map((member) => (
-                  <div key={member.id} className="text-center group">
-                    <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
-                      <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
-                      <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
-                        {member.image ? (
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                            <span className="text-4xl text-gray-400">👤</span>
-                          </div>
-                        )}
+              <>
+                {/* Desktop/Tablet layout */}
+                <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-8">
+                  {boardMembers.map((member) => (
+                    <div key={member.id} className="text-center group">
+                      <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
+                        <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                        <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                          {member.image ? (
+                            <Image
+                              src={member.image}
+                              alt={member.name}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                              <span className="text-4xl text-gray-400">👤</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
+                      <h3 className="font-bold text-neutral-900 text-lg">{member.name}</h3>
+                      <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                      {member.roles && (
+                        <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                      )}
                     </div>
-                    <h3 className="font-bold text-neutral-900 text-lg">{member.name}</h3>
-                    <p className="text-turkish-red font-medium text-sm">{member.role}</p>
-                    {member.roles && (
-                      <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                
+                {/* Mobile layout - special arrangement for 5 members */}
+                <div className="md:hidden flex flex-col gap-6">
+                  {boardMembers.length === 5 ? (
+                    <>
+                      {/* Middle person (3rd) at top, centered */}
+                      <div className="flex justify-center">
+                        {(() => {
+                          const member = boardMembers[2];
+                          return (
+                            <div key={member.id} className="text-center group">
+                              <div className="relative mx-auto w-32 h-32 mb-4">
+                                <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                  {member.image ? (
+                                    <Image
+                                      src={member.image}
+                                      alt={member.name}
+                                      fill
+                                      className="object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                      <span className="text-4xl text-gray-400">👤</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <h3 className="font-bold text-neutral-900 text-lg">{member.name}</h3>
+                              <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                              {member.roles && (
+                                <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                              )}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                      
+                      {/* Left two (1st and 2nd) as second row */}
+                      <div className="grid grid-cols-2 gap-4">
+                        {[boardMembers[0], boardMembers[1]].map((member) => (
+                          <div key={member.id} className="text-center group">
+                            <div className="relative mx-auto w-28 h-28 mb-4">
+                              <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                {member.image ? (
+                                  <Image
+                                    src={member.image}
+                                    alt={member.name}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                    <span className="text-4xl text-gray-400">👤</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <h3 className="font-bold text-neutral-900 text-base">{member.name}</h3>
+                            <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                            {member.roles && (
+                              <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Right two (4th and 5th) as third row */}
+                      <div className="grid grid-cols-2 gap-4">
+                        {[boardMembers[3], boardMembers[4]].map((member) => (
+                          <div key={member.id} className="text-center group">
+                            <div className="relative mx-auto w-28 h-28 mb-4">
+                              <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                {member.image ? (
+                                  <Image
+                                    src={member.image}
+                                    alt={member.name}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                    <span className="text-4xl text-gray-400">👤</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <h3 className="font-bold text-neutral-900 text-base">{member.name}</h3>
+                            <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                            {member.roles && (
+                              <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    /* Fallback for non-5 member counts - simple 2-column grid */
+                    <div className="grid grid-cols-2 gap-6">
+                      {boardMembers.map((member) => (
+                        <div key={member.id} className="text-center group">
+                          <div className="relative mx-auto w-28 h-28 mb-4">
+                            <div className="absolute inset-0 bg-turkish-red/20 rounded-full transform group-hover:scale-105 transition-transform duration-300"></div>
+                            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+                              {member.image ? (
+                                <Image
+                                  src={member.image}
+                                  alt={member.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                  <span className="text-4xl text-gray-400">👤</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <h3 className="font-bold text-neutral-900 text-base">{member.name}</h3>
+                          <p className="text-turkish-red font-medium text-sm">{member.role}</p>
+                          {member.roles && (
+                            <p className="text-neutral-500 text-xs mt-1">{member.roles}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
             ) : (
               <div className="text-center text-neutral-500">
                 Board members coming soon.
