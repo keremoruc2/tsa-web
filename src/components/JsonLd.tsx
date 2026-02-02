@@ -11,10 +11,10 @@ interface OrganizationJsonLdProps {
 
 export function OrganizationJsonLd({
   name = "TSA TWENTE - Turkish Student Association",
-  url = "https://tsatwente.nl",
-  logo = "https://tsatwente.nl/android-chrome-512x512.png",
+  url = "https://tsatwente.com",
+  logo = "https://tsatwente.com/android-chrome-512x512.png",
   description = "Turkish Student Association at University of Twente. A community bringing Turkish culture to the Netherlands through events, networking, and cultural activities.",
-  email = "info@tsatwente.nl",
+  email = "info@tsatwente.com",
   sameAs = [],
 }: OrganizationJsonLdProps) {
   const jsonLd = {
@@ -85,7 +85,7 @@ export function EventJsonLd({
     organizer: {
       "@type": "Organization",
       name: "TSA TWENTE",
-      url: "https://tsatwente.nl",
+      url: "https://tsatwente.com",
     },
     ...(image && { image }),
     ...(url && { url }),
@@ -105,7 +105,7 @@ interface WebsiteJsonLdProps {
 }
 
 export function WebsiteJsonLd({
-  url = "https://tsatwente.nl",
+  url = "https://tsatwente.com",
   name = "TSA TWENTE",
 }: WebsiteJsonLdProps) {
   const jsonLd = {

@@ -5,7 +5,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tsatwente.nl";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tsatwente.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
