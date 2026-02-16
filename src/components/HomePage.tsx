@@ -348,8 +348,8 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://media-cdn.t24.com.tr/media/library/2025/05/1748208865938-aa-20250525-38081319-38081316-galatasaray-sampiyonlugunu-kutluyor.jpg"
-                  alt="Galatasaray championship celebration"
+                  src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80"
+                  alt="Istanbul cityscape with Turkish culture"
                   fill
                   className="object-cover"
                 />
