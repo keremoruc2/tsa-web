@@ -81,8 +81,8 @@ export default function AboutPage() {
               <div className="order-1 md:order-2 relative">
                 <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="https://media-cdn.t24.com.tr/media/library/2025/05/1748208793097-son-haber-muhabir-psd-66.jpg"
-                    alt="Galatasaray championship celebration"
+                    src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=800&q=80"
+                    alt="Turkish culture and traditions"
                     fill
                     className="object-cover"
                   />
